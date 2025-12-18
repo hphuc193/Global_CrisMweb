@@ -263,6 +263,42 @@
                 left: 10px;
             }
         }
+        /* ============ VIDEO INTRO & TRANSITION ============ */
+        #video-intro-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #000;
+            z-index: 10000; /* Cao hơn tất cả */
+            display: none; /* Ẩn mặc định */
+            justify-content: center;
+            align-items: center;
+        }
+
+        #intro-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Đảm bảo video full màn hình không bị đen viền */
+        }
+
+        #white-flash-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #fff; /* Màn hình trắng xóa */
+            z-index: 10001; /* Cao hơn cả video */
+            opacity: 0; /* Mặc định trong suốt */
+            pointer-events: none;
+            transition: opacity 2s ease-in-out; /* Hiệu ứng mờ dần trong 2 giây */
+        }
+
+        #white-flash-overlay.active {
+            opacity: 1; /* Khi active sẽ hiện trắng xóa */
+        }
     </style>
 </head>
 <body>
@@ -274,10 +310,18 @@
         <div class="light-bulb"></div><div class="light-bulb"></div><div class="light-bulb"></div><div class="light-bulb"></div>
         <div class="light-bulb"></div><div class="light-bulb"></div><div class="light-bulb"></div><div class="light-bulb"></div>
     </div>
-    
+
+    <div id="video-intro-container">
+        <video id="intro-video" playsinline>
+            <source src="assets/videos/intro.mp4" type="video/mp4">
+            Trình duyệt của em không hỗ trợ video này rồi :(
+        </video>
+    </div>
+
+    <div id="white-flash-overlay"></div>
 
     <div id="loading">
-        <div class="loading-text">Chờ anh xí nhéee... 🎄</div>
+        <div class="loading-text">Chờ tớ xí nhéee... 🎄</div>
         <div class="progress-bar">
             <div class="progress-fill" id="progress"></div>
         </div>
@@ -347,8 +391,8 @@
     <div id="intro-overlay">
         <div class="intro-content">
             <h1>Noel này</h1>
-            <p>Hphuc mong em vuii kk..</p>
-            <button onclick="startExperience()">Em mở xem nhee </button>
+            <p>Tớ mong cậu vuii kk..</p>
+            <button onclick="startExperience()">Cậu mở xem nhee </button>
         </div>
     </div>
 
@@ -373,12 +417,79 @@
         const textureCache = [];
         const NUM_PHOTOS = 230;
 
-        // --- HÀM XỬ LÝ NÚT MỞ QUÀ ---
+        // --- HÀM START VỚI TÙY CHỈNH THỜI GIAN PHÁT NHẠC INTRO ---
         function startExperience() {
-            audioPlayer.play().then(() => console.log("Nhạc đã phát!")).catch(e => console.log("Lỗi phát nhạc:", e));
-            const intro = document.getElementById('intro-overlay');
-            intro.style.opacity = '0';
-            setTimeout(() => { intro.style.display = 'none'; }, 1000);
+            // ============ CẤU HÌNH THỜI GIAN (CHỈNH Ở ĐÂY) ============
+            const AUDIO_START = 4; // Bắt đầu phát từ giây thứ 10
+            const AUDIO_END   = 54; // Kết thúc ở giây thứ 55
+
+            // Tự động tính thời gian cần phát (đổi sang mili giây)
+            // Ví dụ: 55 - 10 = 45 giây => 45000ms
+            const DURATION_MS = (AUDIO_END - AUDIO_START) * 1000; 
+        
+            // ==========================================================
+        
+            // 1. Ẩn màn hình chào
+            const introOverlay = document.getElementById('intro-overlay');
+            introOverlay.style.display = 'none';
+        
+            // 2. Lấy các phần tử
+            const videoContainer = document.getElementById('video-intro-container');
+            const video = document.getElementById('intro-video');
+            const whiteFlash = document.getElementById('white-flash-overlay');
+        
+            // 3. Xử lý Audio Intro
+            const introAudio = new Audio('./assets/musics/intro.mp3'); 
+            introAudio.volume = 1.0; 
+            introAudio.loop = false;
+
+            // --- QUAN TRỌNG: Tua đến giây bắt đầu ---
+            introAudio.currentTime = AUDIO_START; 
+        
+            // 4. Hiển thị và phát
+            videoContainer.style.display = 'flex';
+            video.currentTime = 0;
+            video.muted = true; // Tắt tiếng video để dùng nhạc mp3
+
+            Promise.all([
+                video.play(),
+                introAudio.play()
+            ]).catch(e => console.log("Lỗi phát media:", e));
+        
+            // 5. LOGIC CHUYỂN CẢNH VISUAL (Giữ nguyên logic giây thứ 7 của video)
+            let visualEffectTriggered = false;
+            video.addEventListener('timeupdate', () => {
+                if (video.currentTime >= 5.3 && !visualEffectTriggered) {
+                    visualEffectTriggered = true;
+                    whiteFlash.classList.add('active'); 
+                    setTimeout(() => {
+                        video.pause();
+                        videoContainer.style.display = 'none';
+                        whiteFlash.style.opacity = '0'; 
+                        setTimeout(() => { whiteFlash.style.display = 'none'; }, 2000);
+                    }, 1500);
+                }
+            });
+        
+            // 6. LOGIC CHUYỂN NHẠC (Dựa trên thời gian đã tính toán)
+            setTimeout(() => {
+                // Hiệu ứng Fade out (nhỏ dần)
+                const fadeOutInterval = setInterval(() => {
+                    if (introAudio.volume > 0.05) {
+                        introAudio.volume -= 0.05;
+                    } else {
+                        clearInterval(fadeOutInterval);
+                        introAudio.pause();
+
+                        // Bắt đầu phát Playlist chính
+                        audioPlayer.volume = 1.0;
+                        audioPlayer.play()
+                            .then(() => console.log("Đã chuyển sang Playlist chính"))
+                            .catch(e => console.log("Lỗi phát playlist:", e));
+                    }
+                }, 100); 
+            
+            }, DURATION_MS); // Dùng biến DURATION_MS đã tính ở trên
         }
 
         // --- HÀM TOGGLE UI (THÔNG MINH) ---
