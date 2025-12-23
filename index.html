@@ -995,7 +995,7 @@
             const cameraPosition = camera.position.clone();
             
             const speedMultiplier = isMobile ? 1.5 : 1.0;
-            const duration = isMobile ? 8000 : 8000;
+            const duration = isMobile ? 5000 : 5000;
 
             photoTree.forEach(photo => {
                 let direction = new THREE.Vector3().subVectors(cameraPosition, photo.position); direction.x += (Math.random() - 0.5) * 10; direction.y += (Math.random() - 0.5) * 5; direction.normalize();
