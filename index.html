@@ -6,12 +6,10 @@
     <title>Merry Christmas</title>
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <style>
-        /* ============ 1. CẤU TRÚC CƠ BẢN ============ */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Georgia', serif; overflow: hidden; background: #000; }
         #canvas-container { width: 100vw; height: 100vh; position: relative; }
 
-        /* ============ 2. DÂY ĐÈN NOEL ============ */
         .christmas-lights {
             position: fixed; top: -15px; left: 0; width: 100%; height: 60px;
             z-index: 999; pointer-events: none; display: flex; justify-content: space-evenly; padding: 0 20px;
@@ -28,7 +26,6 @@
         .light-bulb:nth-child(4n+4) { background: #00ffff; box-shadow: 0 5px 24px rgba(0, 255, 255, 0.8); animation-delay: 1.5s; }
         @keyframes flash { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.9); } }
 
-        /* ============ 3. LOADING & TEXT ============ */
         #loading {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: linear-gradient(135deg, #0a1128 0%, #1a0a2e 50%, #16213e 100%);
@@ -51,7 +48,6 @@
             color: rgba(255, 255, 255, 0.7); font-size: 14px; text-align: center; z-index: 10; width: 100%;
         }
 
-        /* ============ 5. CONTROLS (Nút dưới cùng) ============ */
         #controls-container {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
             display: flex; gap: 20px; z-index: 200;
@@ -67,11 +63,10 @@
         #float-btn { background: linear-gradient(45deg, #483d8b, #6a5acd); }
         #float-btn.active { background: #fff; color: #483d8b; box-shadow: 0 0 30px #fff; }
 
-        /* ============ 🔥 MENU TOGGLE (GÓC TRÁI CHO CẢ WEB & MOBILE) 🔥 ============ */
         #toggle-menu {
             position: fixed; 
             top: 20px; 
-            left: 20px; /* Luôn nằm bên trái */
+            left: 20px;
             z-index: 500; 
             display: flex; gap: 10px;
         }
@@ -86,7 +81,6 @@
         .toggle-icon.active { background: #ff69b4; border-color: #ff69b4; transform: scale(1.1); }
         .toggle-icon:hover { transform: scale(1.1); }
 
-        /* ============ 6. KHUNG ẢNH UI ============ */
         #frame-ui-container {
             position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
             z-index: 100; display: flex; flex-direction: column; gap: 10px; align-items: center;
@@ -113,7 +107,6 @@
             transition: all 0.3s ease; padding: 15px; border-radius: 5px;
         }
 
-        /* THEMES & STICKERS */
         .theme-santa { background: radial-gradient(circle, #b40707 10%, #930000 100%); border: 8px solid #fff; outline: 2px dashed #d42e2e; outline-offset: -4px; }
         .theme-santa .frame-header { color: #fff; font-family: 'Mountains of Christmas', cursive; font-weight: bold; text-shadow: 2px 2px 0 #a00; }
         .theme-frozen { background: linear-gradient(to bottom, #a1c4fd 0%, #c2e9fb 100%); border: 8px solid #fff; }
@@ -154,7 +147,6 @@
         .btn-upload, .btn-save { flex: 1; padding: 8px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; color: #fff; font-size: 11px; }
         .btn-upload { background: #3498db; } .btn-save { background: #27ae60; }
 
-        /* ============ MUSIC PLAYER ============ */
         #music-container {
             position: fixed; left: 20px; top: 100px;
             width: 260px; z-index: 100; font-family: 'Arial', sans-serif;
@@ -181,20 +173,16 @@
         .song-item.active { background: linear-gradient(90deg, #ff9a9e 0%, #fecfef 100%); color: #a31e45; font-weight: bold; border: 1px solid #fff; padding-left: 30px; }
         .song-item.active::before { content: '🔊'; position: absolute; left: 10px; animation: pulse 1s infinite; }
 
-        /* ============ INTRO ============ */
         #intro-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, #2c3e50, #000000); z-index: 9999; display: flex; justify-content: center; align-items: center; transition: opacity 1s ease; }
         .intro-content { text-align: center; color: #fff; animation: floatIntro 3s ease-in-out infinite; }
         .intro-content h1 { font-family: 'Mountains of Christmas', cursive; font-size: 40px; margin-bottom: 10px; color: #ffd700; text-shadow: 0 0 10px #ff0000; }
         .intro-content button { padding: 15px 40px; font-size: 18px; font-weight: bold; background: linear-gradient(45deg, #ff0000, #ff69b4); color: #fff; border: 2px solid #fff; border-radius: 50px; cursor: pointer; margin-top: 20px; box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); transition: transform 0.2s; }
         .intro-content button:hover { transform: scale(1.1); }
 
-        /* ============ RESPONSIVE CHO ĐIỆN THOẠI ============ */
         @media (max-width: 768px) {
-            /* Mobile: Menu vẫn bên trái, chỉnh lại padding */
             #toggle-menu { left: 15px; top: 15px; }
             .toggle-icon { width: 40px; height: 40px; font-size: 18px; }
 
-            /* Mobile: Khung ảnh */
             #frame-ui-container {
                 top: auto; bottom: 80px; right: auto; left: 50%;
                 transform: translateX(-50%) scale(0.7);
@@ -204,7 +192,6 @@
                 transform: translateX(-50%) translateY(120%) scale(0.7);
             }
 
-            /* Mobile: Nhạc (đẩy xuống dưới nút menu) */
             #music-container {
                 top: 70px; left: 15px;
                 transform: scale(0.9);
@@ -214,7 +201,6 @@
                 transform: translateX(-150%) scale(0.9);
             }
 
-            /* Mobile: Controls (Thấp xuống và nhỏ lại) */
             #controls-container {
                 bottom: 15px;
                 gap: 15px;
@@ -231,7 +217,6 @@
         #cam-btn { background: linear-gradient(45deg, #11998e, #38ef7d); }
         #cam-btn.active { background: #fff; color: #11998e; box-shadow: 0 0 30px #fff; }
 
-        /* ============ THÊM MỚI: MINI CAMERA VIEW ============ */
         .input_video {
             position: fixed;
             bottom: 20px;
@@ -242,9 +227,9 @@
             border: 3px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
             z-index: 9999;
-            transform: scaleX(-1); /* Lật ngược hình để giống gương */
+            transform: scaleX(-1);
             object-fit: cover;
-            display: none; /* Mặc định ẩn */
+            display: none;
             opacity: 0;
             transition: opacity 0.5s ease;
         }
@@ -254,16 +239,14 @@
             opacity: 1;
         }
 
-        /* Ẩn camera trên mobile cho đỡ vướng nếu cần */
         @media (max-width: 768px) {
             .input_video {
                 width: 120px;
                 height: 90px;
-                bottom: 70px; /* Né nút controls ra */
+                bottom: 70px;
                 left: 10px;
             }
         }
-        /* ============ VIDEO INTRO & TRANSITION ============ */
         #video-intro-container {
             position: fixed;
             top: 0;
@@ -271,8 +254,8 @@
             width: 100vw;
             height: 100vh;
             background: #000;
-            z-index: 10000; /* Cao hơn tất cả */
-            display: none; /* Ẩn mặc định */
+            z-index: 10000;
+            display: none;
             justify-content: center;
             align-items: center;
         }
@@ -280,7 +263,7 @@
         #intro-video {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Đảm bảo video full màn hình không bị đen viền */
+            object-fit: cover;
         }
 
         #white-flash-overlay {
@@ -289,15 +272,15 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: #fff; /* Màn hình trắng xóa */
-            z-index: 10001; /* Cao hơn cả video */
-            opacity: 0; /* Mặc định trong suốt */
+            background: #fff;
+            z-index: 10001;
+            opacity: 0;
             pointer-events: none;
-            transition: opacity 2s ease-in-out; /* Hiệu ứng mờ dần trong 2 giây */
+            transition: opacity 2s ease-in-out;
         }
 
         #white-flash-overlay.active {
-            opacity: 1; /* Khi active sẽ hiện trắng xóa */
+            opacity: 1;
         }
     </style>
 </head>
@@ -403,7 +386,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
     <script>
-        // ============ THIẾT LẬP CƠ BẢN ============
         let scene, camera, renderer, composer;
         let isExploding = false;
         let isReturning = false;
@@ -417,46 +399,34 @@
         const textureCache = [];
         const NUM_PHOTOS = 230;
 
-        // --- HÀM START VỚI TÙY CHỈNH THỜI GIAN PHÁT NHẠC INTRO ---
         function startExperience() {
-            // ============ CẤU HÌNH THỜI GIAN (CHỈNH Ở ĐÂY) ============
-            const AUDIO_START = 4; // Bắt đầu phát từ giây thứ 10
-            const AUDIO_END   = 54; // Kết thúc ở giây thứ 55
+            const AUDIO_START = 4;
+            const AUDIO_END   = 54;
 
-            // Tự động tính thời gian cần phát (đổi sang mili giây)
-            // Ví dụ: 55 - 10 = 45 giây => 45000ms
             const DURATION_MS = (AUDIO_END - AUDIO_START) * 1000; 
-        
-            // ==========================================================
-        
-            // 1. Ẩn màn hình chào
+                
             const introOverlay = document.getElementById('intro-overlay');
             introOverlay.style.display = 'none';
         
-            // 2. Lấy các phần tử
             const videoContainer = document.getElementById('video-intro-container');
             const video = document.getElementById('intro-video');
             const whiteFlash = document.getElementById('white-flash-overlay');
         
-            // 3. Xử lý Audio Intro
             const introAudio = new Audio('./assets/musics/intro.mp3'); 
             introAudio.volume = 1.0; 
             introAudio.loop = false;
 
-            // --- QUAN TRỌNG: Tua đến giây bắt đầu ---
             introAudio.currentTime = AUDIO_START; 
         
-            // 4. Hiển thị và phát
             videoContainer.style.display = 'flex';
             video.currentTime = 0;
-            video.muted = true; // Tắt tiếng video để dùng nhạc mp3
+            video.muted = true;
 
             Promise.all([
                 video.play(),
                 introAudio.play()
             ]).catch(e => console.log("Lỗi phát media:", e));
         
-            // 5. LOGIC CHUYỂN CẢNH VISUAL (Giữ nguyên logic giây thứ 7 của video)
             let visualEffectTriggered = false;
             video.addEventListener('timeupdate', () => {
                 if (video.currentTime >= 5.3 && !visualEffectTriggered) {
@@ -471,9 +441,7 @@
                 }
             });
         
-            // 6. LOGIC CHUYỂN NHẠC (Dựa trên thời gian đã tính toán)
             setTimeout(() => {
-                // Hiệu ứng Fade out (nhỏ dần)
                 const fadeOutInterval = setInterval(() => {
                     if (introAudio.volume > 0.05) {
                         introAudio.volume -= 0.05;
@@ -481,7 +449,6 @@
                         clearInterval(fadeOutInterval);
                         introAudio.pause();
 
-                        // Bắt đầu phát Playlist chính
                         audioPlayer.volume = 1.0;
                         audioPlayer.play()
                             .then(() => console.log("Đã chuyển sang Playlist chính"))
@@ -489,10 +456,9 @@
                     }
                 }, 100); 
             
-            }, DURATION_MS); // Dùng biến DURATION_MS đã tính ở trên
+            }, DURATION_MS);
         }
 
-        // --- HÀM TOGGLE UI (THÔNG MINH) ---
         function toggleUI(type) {
             const btn = document.querySelector(`.toggle-icon[onclick="toggleUI('${type}')"]`);
             if (type === 'music') {
@@ -504,21 +470,17 @@
                 el.classList.toggle('hidden-ui');
                 btn.classList.toggle('active');
 
-                // 🔥 LOGIC ẨN/HIỆN NÚT ĐIỀU KHIỂN KHI MỞ FRAME
                 const controls = document.getElementById('controls-container');
                 if (!el.classList.contains('hidden-ui')) {
-                    // Nếu Frame hiện -> Ẩn Controls
                     controls.style.opacity = '0';
                     controls.style.visibility = 'hidden'; 
                 } else {
-                    // Nếu Frame ẩn -> Hiện Controls
                     controls.style.opacity = '1';
                     controls.style.visibility = 'visible';
                 }
             }
         }
 
-        /* ============ CẤU HÌNH NHẠC ============ */
         const songList = [
             { name: "Last Christmas", file: "last_christmas.mp3" },
             { name: "All I Want For Christmas", file: "all_i_want.mp3" },
@@ -575,7 +537,6 @@
         
         initMusicSystem();
 
-        // ============ KHỞI TẠO SCENE ============
         function init() {
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0x0a0a1a);
@@ -583,13 +544,12 @@
 
             camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
             
-            // 🔥 CẤU HÌNH CAMERA THÔNG MINH 🔥
             if (window.innerWidth < 768) {
-                camera.position.set(0, 18, 55);  // Mobile: Gần hơn (Z=55)
-                toggleUI('frame'); // Mặc định ẩn frame
-                toggleUI('music'); // Mặc định ẩn nhạc
+                camera.position.set(0, 18, 55);
+                toggleUI('frame');
+                toggleUI('music');
             } else {
-                camera.position.set(0, 15, 45); // PC: Giữ nguyên
+                camera.position.set(0, 15, 45);
             }
             camera.lookAt(0, 12, 0);
 
@@ -622,8 +582,8 @@
             init();
             changeLayout(3);
         };
-        let targetRotation = { x: 0, y: 0 }; // Biến lưu góc xoay mong muốn
-        let targetZoom = 45; // Biến lưu độ zoom (Z position)
+        let targetRotation = { x: 0, y: 0 };
+        let targetZoom = 45;
         let rotation = { x: 0, y: 0 };
         function setupControls() {
             let isDragging = false;
@@ -646,7 +606,6 @@
                     const deltaY = e.clientY - previousMousePosition.y;
                     window.sceneRotation.y += deltaX * 0.005;
                     window.sceneRotation.x += deltaY * 0.005;
-                    // Giới hạn góc xoay lên xuống
                     window.sceneRotation.x = Math.max(-Math.PI / 6, Math.min(Math.PI / 6, window.sceneRotation.x));
                     previousMousePosition = { x: e.clientX, y: e.clientY };
                 }
@@ -673,17 +632,13 @@
 
             function updateCamera() {
                 const isMobile = window.innerWidth < 768;
-                // Logic Zoom: Camera Z sẽ thay đổi dựa trên targetZoom
-                // Smooth zoom
                 if (!isMobile) {
-                     // PC default Z = 45. Chúng ta sẽ lerp tới targetZoom
                      camera.position.z += (targetZoom - camera.position.z) * 0.1;
                 }
             
-                const radius = camera.position.z; // Bán kính dựa trên độ zoom hiện tại
+                const radius = camera.position.z;
                 const height = isMobile ? 18 : 15;
                 
-                // Áp dụng rotation
                 camera.position.x = radius * Math.sin(window.sceneRotation.y) * Math.cos(window.sceneRotation.x);
                 camera.position.y = height + radius * Math.sin(window.sceneRotation.x);
                 camera.position.z = radius * Math.cos(window.sceneRotation.y) * Math.cos(window.sceneRotation.x);
@@ -1051,16 +1006,13 @@
         }
     </script>
     <script>
-        // ============ LOGIC CAMERA & HAND GESTURE (ALL-IN-ONE) ============
         const videoElement = document.getElementsByClassName('input_video')[0];
         let cameraUtils;
         let isCameraActive = false;
         
-        // Biến lưu tọa độ cũ để tính toán di chuyển
         let prevHandX = null;
         let prevHandY = null;
 
-        // Khởi tạo Hands
         const hands = new Hands({locateFile: (file) => {
             return `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`;
         }});
@@ -1081,46 +1033,33 @@
                 const landmarks = results.multiHandLandmarks[0];
                 const gesture = detectGestureDetailed(landmarks);
                 
-                // Lấy tọa độ lòng bàn tay (landmark 9)
                 const currentX = landmarks[9].x; 
                 const currentY = landmarks[9].y;
 
-                // --- 1. XỬ LÝ ZOOM (Ưu tiên cao nhất) ---
                 if (gesture === 'pinch') {
-                    // Chụm tay: Chỉ Zoom, không xoay, không đổi trạng thái cây
                     if (prevHandY !== null) {
                         const deltaY = currentY - prevHandY;
-                        // Kéo tay lên (Y giảm) -> Zoom vào (Z giảm)
-                        // Kéo tay xuống (Y tăng) -> Zoom ra (Z tăng)
                         if (typeof targetZoom !== 'undefined') {
-                            targetZoom += deltaY * 120; // Độ nhạy zoom
+                            targetZoom += deltaY * 80;
                             targetZoom = Math.max(10, Math.min(120, targetZoom)); 
                         }
                     }
-                    // Reset X để không bị xoay nhầm khi đang zoom
                     prevHandY = currentY;
                     prevHandX = null; 
                 } 
                 
-                // --- 2. XỬ LÝ TRẠNG THÁI CÂY (Nắm/Xòe) & XOAY ---
                 else {
-                    // Reset Y vì không còn zoom nữa
                     prevHandY = null; 
 
                     if (gesture === 'open') {
-                        // ==> XÒE TAY: Kích hoạt BAY LƠ LỬNG + XOAY
                         
-                        // A. Logic Bay lơ lửng
-                        // Nếu cây đang chưa bay (và không đang nổ) -> Cho bay ngay
                         if (!isFloating && !isExploding) {
-                            toggleFloating(); // Hàm có sẵn ở script trên
-                            showInteractionHint("✨ Magic Mode: Xoay tay để ngắm ảnh ✨");
+                            toggleFloating();
+                            // showInteractionHint("Xoay tay để ngắm ảnh");
                         }
 
-                        // B. Logic Xoay (Chỉ xoay khi xòe tay)
                         if (prevHandX !== null) {
                             const deltaX = currentX - prevHandX;
-                            // Di chuyển tay trái/phải để xoay scene
                             if (window.sceneRotation) {
                                 window.sceneRotation.y -= deltaX * 3.5; 
                             }
@@ -1128,63 +1067,51 @@
                         prevHandX = currentX;
                     } 
                     else if (gesture === 'closed') {
-                        // ==> NẮM TAY: THU CÂY VỀ
                         
-                        // Nếu cây đang bay -> Thu về
                         if (isFloating && !isExploding) {
-                            toggleFloating(); // Hàm này sẽ tắt isFloating và bật isReturning
-                            showInteractionHint("🎄 Cây đang xếp lại... 🎄");
+                            toggleFloating();
+                            // showInteractionHint("🎄 Cây đang xếp lại... 🎄");
                         }
                         
-                        // Khi nắm tay thì ngừng xoay (reset tọa độ)
                         prevHandX = null;
                     } 
                     else {
-                        // Trạng thái trung tính
                         prevHandX = null;
                     }
                 }
             } else {
-                // Không thấy tay
                 prevHandX = null;
                 prevHandY = null;
             }
         }
 
-        // Hàm phân loại cử chỉ chi tiết (Nắm / Xòe / Chụm)
         function detectGestureDetailed(landmarks) {
             const thumbTip = landmarks[4];
             const indexTip = landmarks[8];
             
-            // 1. Check Chụm (Pinch) cho Zoom
             const pinchDist = getDistance(thumbTip, indexTip);
             if (pinchDist < 0.05) return 'pinch';
 
-            // 2. Check Nắm/Xòe
-            // Đếm số ngón tay duỗi thẳng
             let extendedFingers = 0;
-            const tips = [8, 12, 16, 20]; // Đầu ngón
-            const pips = [6, 10, 14, 18]; // Khớp nối
+            const tips = [8, 12, 16, 20];
+            const pips = [6, 10, 14, 18];
             
             for (let i = 0; i < 4; i++) {
-                // So sánh khoảng cách tới cổ tay (landmark 0)
                 const distTip = getDistance(landmarks[0], landmarks[tips[i]]);
                 const distPip = getDistance(landmarks[0], landmarks[pips[i]]);
-                // Nếu đầu ngón xa hơn khớp nối đáng kể -> Ngón đang duỗi
                 if (distTip > distPip * 1.1) extendedFingers++;
             }
 
-            if (extendedFingers >= 3) return 'open';    // Xòe (3 ngón trở lên)
-            if (extendedFingers <= 1) return 'closed';  // Nắm (0 hoặc 1 ngón)
+            if (extendedFingers >= 3) return 'open';
+            if (extendedFingers <= 1) return 'closed';
             
-            return 'neutral'; // Lửng lơ
+            return 'neutral';
         }
 
         function getDistance(p1, p2) {
             return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
         }
 
-        // Hàm bật/tắt camera (đã cập nhật hiển thị màn hình nhỏ)
         function toggleCameraControl() {
             const btn = document.getElementById('cam-btn');
             const videoEl = document.getElementsByClassName('input_video')[0];
@@ -1205,9 +1132,9 @@
                 cameraUtils.start()
                     .then(() => {
                         btn.innerText = "🛑 Tắt VR";
-                        // Hiện màn hình nhỏ (nhớ thêm CSS ở bước trước)
-                        if(videoEl) videoEl.classList.add('active'); 
-                        showInteractionHint("👋 Xòe: Bay & Xoay | ✊ Nắm: Xếp Cây | Di chuyển: Zoom");
+                        // Hiện màn hình nhỏ (mở comment dòng dưới nhé)
+                        // if(videoEl) videoEl.classList.add('active'); 
+                        // showInteractionHint("👋 Xòe: Bay & Xoay | ✊ Nắm: Xếp Cây | Di chuyển: Zoom");
                     })
                     .catch(err => {
                         console.error(err);
@@ -1224,8 +1151,6 @@
                 btn.innerText = "📷 VR Control";
             }
         }
-
-        // Helper hiển thị thông báo
         function showInteractionHint(text) {
             let msgBox = document.getElementById('gesture-msg');
             if (!msgBox) {
@@ -1240,7 +1165,6 @@
                 });
                 document.body.appendChild(msgBox);
             }
-            // Chỉ update text nếu khác thông báo cũ để tránh nháy
             if (msgBox.innerText !== text || msgBox.style.opacity == '0') {
                 msgBox.innerHTML = text;
                 msgBox.style.opacity = '1';
